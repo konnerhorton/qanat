@@ -1,0 +1,72 @@
+[project]
+name = "qanat-design"
+version = "0.1.0.dev0"
+description = "Closed-form and empirical design calculations for tunnels and shafts, traceable to their inputs and sources"
+readme = "README.md"
+requires-python = ">=3.12"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Konner Horton", email = "konnerhorton@gmail.com" }]
+keywords = [
+    "tunnel",
+    "tunneling",
+    "shaft",
+    "support of excavation",
+    "underground construction",
+    "geotechnical engineering",
+    "TBM",
+    "microtunneling",
+]
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Intended Audience :: Science/Research",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Scientific/Engineering",
+]
+dependencies = [
+    "pint>=0.24.4",
+]
+
+[project.urls]
+Homepage = "https://github.com/konnerhorton/qanat"
+Source = "https://github.com/konnerhorton/qanat"
+Issues = "https://github.com/konnerhorton/qanat/issues"
+Specification = "https://github.com/konnerhorton/qanat/blob/main/SPEC.md"
+
+[dependency-groups]
+dev = ["pytest>=8.0", "ruff>=0.17", "hypothesis>=6.100"]
+
+[build-system]
+requires = ["uv_build>=0.9.9,<0.10"]
+build-backend = "uv_build"
+
+# The distribution is qanat-design (the bare name is taken on PyPI); the import name is qanat.
+[tool.uv.build-backend]
+module-name = "qanat"
+
+[tool.ruff]
+target-version = "py312"
+
+# Code blocks in the docs are hand-aligned sketches, not code to format.
+[tool.ruff.format]
+exclude = ["*.md"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "SIM", "RUF", "D"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "numpy"
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["D"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = ["-ra", "--strict-markers", "--strict-config", "--import-mode=importlib"]
+xfail_strict = true
+filterwarnings = ["error"]

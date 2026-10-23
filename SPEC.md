@@ -198,7 +198,7 @@ Pass/fail on a check (FS below the target) is separate from validity: a method c
 
 ### 11.1 Environment and distribution
 - **Python ≥ 3.12** (decided 2026-10-23) and `uv`, matching hangtu, so both install in one environment. CI on Windows, macOS and Linux × Python 3.12–3.14.
-- **Dependencies:** `pint` (from M0, §6). 🟡 `numpy` and `pandas` (profiles, reach tables, sweep output) are added by M1, when code first uses them. Each dependency has a floor, proven by a CI job on the oldest allowed versions. Adding another needs a decision here.
+- **Dependencies:** `pint>=0.24.4` (from M0, §6; 0.24.0–0.24.3 fail to import with current `flexparser`). Dev: `pytest>=8.0`, `ruff>=0.17`, `hypothesis>=6.100`, floored too because the lowest-versions job lowers them as well. 🟡 `numpy` and `pandas` (profiles, reach tables, sweep output) are added by M1, when code first uses them. Each dependency has a floor, proven by a CI job on the oldest allowed versions. Adding another needs a decision here.
 - MIT license.
 
 ### 11.2 Package layout
