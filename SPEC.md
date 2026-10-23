@@ -30,7 +30,7 @@
   - They think in **scripts and functions** more than objects, so every analysis is a plain function.
   - **The engineer who checks a calculation is often not the one who ran it** (or is the same one, months later). So every result carries what it took to check it: its inputs, method, source and validity (§4, §5). A plausible wrong answer should never pass without a trace.
 - **Distribution (decided):** open source, MIT license, published on PyPI and public GitHub, developed independently. No project data is used in development or testing: real project documents stay on the machine where the work is done.
-- **Name (decided):** `qanat`. 🟡 Imported as `import qanat as qn`.
+- **Name (decided 2026-10-23):** published on PyPI as **`qanat-design`**, imported as `import qanat as qn`. The bare `qanat` name on PyPI belongs to an abandoned project; a PEP 541 transfer is being requested, and the import name doesn't change either way.
 
 ### 1.2 The ecosystem
 qanat is one package in a set of independent open-source libraries (decided 2026-10-23):
@@ -153,7 +153,11 @@ Pass/fail on a check (FS below the target) is separate from validity: a method c
 - **SI is the preferred system** (decided 2026-10-23): kN, kPa, m, kN/m³, as hangtu.
 - **Code-neutral** (decided): qanat isn't written to one design code; the method and its source are named on every result (§7).
 - **Empirical equations in US units** (decided): the conversion happens inside the function, once, at the equation, and is shown in the result's method. The user never converts by hand.
-- 🟡 **Never guess a unit** (as hangtu SPEC §2.6). ❓ How units are given on scalar inputs (Q2): plain floats in documented SI units, pint quantities, or both. DataFrames carry units in `df.attrs["units"]`, as hangtu.
+- **Never guess a unit** (as hangtu SPEC §2.6).
+- **Pint first** (decided 2026-10-23): a scalar input is a pint quantity, and the docs, examples and docstrings write inputs that way, so the unit is explicit at the call. **A plain float is accepted and read as the documented SI unit.** The result's input echo (§5.1) records which it was, so a float in the wrong unit can be caught on review.
+  - 🟡 Any pint quantity is accepted, whatever registry made it (hangtu has its own), by reading its magnitude and unit. qanat uses pint's application registry for the quantities it returns.
+  - 🟡 Result values are pint quantities; `.to_dict()` and `.to_frame()` give SI magnitudes with the units recorded (in `df.attrs["units"]` for a frame). Set in M1.
+- DataFrames carry units in `df.attrs["units"]`, as hangtu.
 - **Units never appear in names** (`depth`, not `depth_m`), as hangtu.
 
 ## 7. Design codes and structural checks
@@ -193,8 +197,8 @@ Pass/fail on a check (FS below the target) is separate from validity: a method c
 ## 11. Engineering
 
 ### 11.1 Environment and distribution
-- 🟡 Python ≥ 3.12 and `uv`, matching hangtu, so both install in one environment. CI on Windows, macOS and Linux × Python 3.12–3.14.
-- 🟡 Dependencies: `numpy`, `pint`, `pandas` (for profiles and reach tables). Adding another needs a decision here.
+- **Python ≥ 3.12** (decided 2026-10-23) and `uv`, matching hangtu, so both install in one environment. CI on Windows, macOS and Linux × Python 3.12–3.14.
+- **Dependencies:** `pint` (from M0, §6). 🟡 `numpy` and `pandas` (profiles, reach tables, sweep output) are added by M1, when code first uses them. Each dependency has a floor, proven by a CI job on the oldest allowed versions. Adding another needs a decision here.
 - MIT license.
 
 ### 11.2 Package layout
@@ -215,6 +219,6 @@ Pass/fail on a check (FS below the target) is separate from validity: a method c
 
 ## 12. Open questions
 1. Project library timing: decided 2026-10-23, after at least M1 (§3).
-2. ❓ **Units on scalar inputs** (§6): plain SI floats, pint quantities, or both? Claude's view: accept both. Plain floats are SI as documented; a pint quantity is converted, and its unit is recorded. A plain float in the wrong unit is the risk, and the input echo in the result is what catches it.
+2. Units on scalar inputs: decided 2026-10-23, pint first with SI floats accepted (§6).
 3. Check framing: decided 2026-10-23, factors of safety only for now, with LRFD evaluated in each milestone (§7).
 4. Array inputs: decided 2026-10-23, per analysis (§5.3).
