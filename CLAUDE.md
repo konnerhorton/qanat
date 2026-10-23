@@ -1,6 +1,6 @@
 # qanat
 
-Open-source Python library of closed-form and empirical design calculations for tunnels and shafts, to get a project to a 60% design quickly and traceably, and to show where numerical analysis is needed (SPEC §1). One package in an ecosystem with hangtu (ground parameters, upstream) and a settlement library (downstream); none depends on another (SPEC §1.2, §3). Published as `qanat-design`, imported as `import qanat as qn` (SPEC §1.1). Status: `SPEC.md` is in draft; M0 (scaffolding, [`docs/work/m0-scaffolding.md`](docs/work/m0-scaffolding.md)) is built, with CI on GitHub still to confirm (TODO #1). Next: M1 (framework, `qn.sweep`, circular shaft SOE and basal heave).
+Open-source Python library of closed-form and empirical design calculations for tunnels and shafts, to get a project to a 60% design quickly and traceably, and to show where numerical analysis is needed (SPEC §1). One package in an ecosystem with hangtu (ground parameters, upstream) and a settlement library (downstream); none depends on another (SPEC §1.2, §3). Published as `qanat-design`, imported as `import qanat as qn` (SPEC §1.1). Status: `SPEC.md` is in draft; M0 (scaffolding, [`docs/work/m0-scaffolding.md`](docs/work/m0-scaffolding.md)) is done, with CI green on GitHub. Next: M1 (framework, `qn.sweep`, circular shaft SOE and basal heave).
 
 ## Where things are
 - `SPEC.md`: product spec and cross-cutting decisions. Read the relevant section before designing anything.
