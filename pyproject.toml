@@ -1,6 +1,6 @@
 [project]
 name = "qanat-design"
-version = "0.1.0.dev0"
+version = "0.0.1"
 description = "Closed-form and empirical design calculations for tunnels and shafts, traceable to their inputs and sources"
 readme = "README.md"
 requires-python = ">=3.12"
